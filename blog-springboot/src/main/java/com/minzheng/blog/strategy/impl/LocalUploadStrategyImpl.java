@@ -34,6 +34,11 @@ public class LocalUploadStrategyImpl extends AbstractUploadStrategyImpl {
 
     @Override
     public void upload(String path, String fileName, InputStream inputStream) throws IOException {
+        /*
+        //替换原有路径,hy特殊上传路径,须修改nginx映射
+        path = UserUtils.getLoginUser().getUserInfoId + “/face/”;
+         */
+
         // 判断目录是否存在
         File directory = new File(localPath + path);
         if (!directory.exists()) {

@@ -27,7 +27,7 @@ public class Knife4jConfig {
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .protocols(Collections.singleton("https"))
-                .host("https://www.talkxj.com")
+                .host("https://www.astg.work")
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.minzheng.blog.controller"))
@@ -39,8 +39,8 @@ public class Knife4jConfig {
         return new ApiInfoBuilder()
                 .title("博客api文档")
                 .description("springboot+vue开发的博客项目")
-                .contact(new Contact("风丶宇", "https://github.com/X1192176811", "1192176811@qq.com"))
-                .termsOfServiceUrl("https://www.talkxj.com/api")
+                .contact(new Contact("昊丶毅", "https://github.com/q91", "1965439263@qq.com"))
+                .termsOfServiceUrl("https://www.astg.work/api")
                 .version("1.0")
                 .build();
     }
