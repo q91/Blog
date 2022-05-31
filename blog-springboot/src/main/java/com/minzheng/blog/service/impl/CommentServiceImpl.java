@@ -24,7 +24,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -118,14 +117,13 @@ public class CommentServiceImpl extends ServiceImpl<CommentDao, Comment> impleme
         return replyDTOList;
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveComment(CommentVO commentVO) {
         // 判断是否需要审核
         WebsiteConfigVO websiteConfig = blogInfoService.getWebsiteConfig();
         Integer isReview = websiteConfig.getIsCommentReview();
         // 过滤标签
-        commentVO.setCommentContent(HTMLUtils.deleteTag(commentVO.getCommentContent()));
+        commentVO.setCommentContent(HTMLUtils.filter(commentVO.getCommentContent()));
         Comment comment = Comment.builder()
                 .userId(UserUtils.getLoginUser().getUserInfoId())
                 .replyUserId(commentVO.getReplyUserId())
@@ -142,7 +140,6 @@ public class CommentServiceImpl extends ServiceImpl<CommentDao, Comment> impleme
         }
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveCommentLike(Integer commentId) {
         // 判断是否点赞
@@ -160,7 +157,6 @@ public class CommentServiceImpl extends ServiceImpl<CommentDao, Comment> impleme
         }
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateCommentsReview(ReviewVO reviewVO) {
         // 修改评论审核状态
